@@ -1,0 +1,17 @@
+version: '3.4'
+
+networks:
+    frontend:
+    backend:
+
+services:
+      mssqlserver:
+        image: "microsoft/mssql-server-linux:latest"
+        environment:
+            ACCEPT_EULA: Y
+            SA_PASSWORD: EventAPI$
+        container_name: catalogeventdb
+        ports:
+            - "1446:1433"
+        networks:
+            - backend
