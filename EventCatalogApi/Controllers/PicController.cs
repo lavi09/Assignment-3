@@ -24,9 +24,9 @@ namespace EventCatalogApi.Controllers
         public IActionResult GetImage(int id)
         {
             var webroot = _env.WebRootPath;
-            var path=Path.Combine(webroot + "/Pics/", "events-" + id + ".jpg");
+            var path=Path.Combine(webroot + "/Pics/", "events-" + id + ".png");
             var buffer=System.IO.File.ReadAllBytes(path);
-            return File(buffer,"image/jpg");
+            return File(buffer,"image/png");
         }
 
     }

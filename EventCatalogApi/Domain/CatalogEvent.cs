@@ -21,9 +21,12 @@ namespace EventCatalogApi.Domain
 
         public int CatalogCategoryID { get; set; }
         public int CatalogTypeID { get; set; }
+        public int CatalogCityID { get; set; }
 
         public virtual CatalogType CatalogType { get; set; }
         public virtual CatalogCategory CatalogCategory { get; set; }
+        public virtual CatalogCity CatalogCity { get; set; }
+
 
     }
 }

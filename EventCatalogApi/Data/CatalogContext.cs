@@ -19,14 +19,29 @@ namespace EventCatalogApi.Data
 
         public DbSet<CatalogType> CatalogTypes { get; set; }
 
+        public DbSet<CatalogCity> CatalogCities { get; set; }
+
         public DbSet<CatalogEvent> CatalogEvents { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CatalogCategory>(ConfigureCatalogCategory);
             modelBuilder.Entity<CatalogType>(ConfigureCatalogType);
+            modelBuilder.Entity<CatalogCity>(ConfigureCatalogCity);
             modelBuilder.Entity<CatalogEvent>(ConfigureCatalogEvent);
-        }                      
+        }
+
+        private void ConfigureCatalogCity(EntityTypeBuilder<CatalogCity> builder)
+        {
+            builder.ToTable("CatalogCities");
+            builder.Property(c => c.ID)
+                .IsRequired()
+                .ForSqlServerUseSequenceHiLo("catalog_city_hilo");
+            builder.Property(c => c.City)
+                .IsRequired();                
+
+        }
 
         private void ConfigureCatalogCategory(EntityTypeBuilder<CatalogCategory> builder)
         {
@@ -84,6 +99,11 @@ namespace EventCatalogApi.Data
             builder.HasOne(c => c.CatalogType)
                .WithMany()
                .HasForeignKey(c => c.CatalogTypeID);
+
+            builder.HasOne(c => c.CatalogCity)
+                           .WithMany()
+                           .HasForeignKey(c => c.CatalogCityID);
+
         }
 
     }

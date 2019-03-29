@@ -32,6 +32,16 @@ namespace EventCatalogApi.Controllers
             var events = await _context.CatalogTypes.ToListAsync();
             return Ok(events);
         }
+        [HttpGet]
+        [Route("[action]")]
+
+        public async Task<IActionResult> CatalogCities()
+        {
+            var events = await _context.CatalogCities.ToListAsync();
+            return Ok(events);
+        }
+
+
 
         [HttpGet]
         [Route("[action]")]

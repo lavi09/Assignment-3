@@ -19,6 +19,7 @@ namespace EventCatalogApi.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("Relational:Sequence:.catalog_category_hilo", "'catalog_category_hilo', '', '1', '10', '', '', 'Int64', 'False'")
+                .HasAnnotation("Relational:Sequence:.catalog_city_hilo", "'catalog_city_hilo', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.catalog_event_hilo", "'catalog_event_hilo', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:.catalog_type_hilo", "'catalog_type_hilo', '', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -39,6 +40,21 @@ namespace EventCatalogApi.Migrations
                     b.ToTable("CatalogCategories");
                 });
 
+            modelBuilder.Entity("EventCatalogApi.Domain.CatalogCity", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:HiLoSequenceName", "catalog_city_hilo")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+
+                    b.Property<string>("City")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.ToTable("CatalogCities");
+                });
+
             modelBuilder.Entity("EventCatalogApi.Domain.CatalogEvent", b =>
                 {
                     b.Property<int>("ID")
@@ -51,6 +67,8 @@ namespace EventCatalogApi.Migrations
                         .HasMaxLength(100);
 
                     b.Property<int>("CatalogCategoryID");
+
+                    b.Property<int>("CatalogCityID");
 
                     b.Property<int>("CatalogTypeID");
 
@@ -84,6 +102,8 @@ namespace EventCatalogApi.Migrations
 
                     b.HasIndex("CatalogCategoryID");
 
+                    b.HasIndex("CatalogCityID");
+
                     b.HasIndex("CatalogTypeID");
 
                     b.ToTable("Catalog");
@@ -109,6 +129,11 @@ namespace EventCatalogApi.Migrations
                     b.HasOne("EventCatalogApi.Domain.CatalogCategory", "CatalogCategory")
                         .WithMany()
                         .HasForeignKey("CatalogCategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EventCatalogApi.Domain.CatalogCity", "CatalogCity")
+                        .WithMany()
+                        .HasForeignKey("CatalogCityID")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("EventCatalogApi.Domain.CatalogType", "CatalogType")
