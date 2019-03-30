@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebMvc.Services;
 using WebMvc.ViewModels;
@@ -25,8 +26,10 @@ namespace WebMvc.Controllers
                 CatalogEvents = catalog.Data,
                 Categories = await _service.GetCategoriesAsync(),
                 Types = await _service.GetTypesAsync(),
+                Cities=await _service.GetCitiesAsync(),
                 CategoryFilterApplied = categoryFilterApplied ?? 0,
                 TypesFilterApplied = typeFilterApplied ?? 0,
+                CitiesFilterApplied = cityFilterApplied ?? 0,
                 PaginationInfo = new PaginationInfo
                 {
                     ActualPage = page ?? 0,
@@ -42,7 +45,16 @@ namespace WebMvc.Controllers
             return View(vm);
         }
 
-        
+        [Authorize]
+        public IActionResult About()
+        {
+            ViewData["Message"] = "Your application description page.";
+
+
+            return View();
+        }
+
+
 
     }
 }

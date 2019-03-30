@@ -1,19 +1,15 @@
-FROM microsoft/aspnetcore:2.0 AS base
+FROM microsoft/aspnetcore-build:2.0 AS build
 WORKDIR /app
 EXPOSE 80
 
-FROM microsoft/aspnetcore-build:2.0 AS build
-WORKDIR /src
-COPY ["EventCatalogApi/EventCatalogApi.csproj", "EventCatalogApi/"]
-RUN dotnet restore "EventCatalogApi/EventCatalogApi.csproj"
 COPY . .
-WORKDIR "/src/EventCatalogApi"
-RUN dotnet build "EventCatalogApi.csproj" -c Release -o /app
+RUN dotnet restore EventCatalogApi.csproj
+
 
 FROM build AS publish
 RUN dotnet publish "EventCatalogApi.csproj" -c Release -o /app
 
-FROM base AS final
+
 WORKDIR /app
-COPY --from=publish /app .
+COPY --from=build /app .
 ENTRYPOINT ["dotnet", "EventCatalogApi.dll"]
