@@ -11,6 +11,7 @@ namespace EventCatalogApi.Data
     {
         public static void Seed(CatalogContext context)
         {
+
             context.Database.Migrate();
             if (!context.CatalogCategories.Any())
             {
