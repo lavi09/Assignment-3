@@ -9,21 +9,22 @@ services:
         build:
             context: .\EventCatalogApi
             dockerfile: Dockerfile
-        image: event/catalogapi
+        image: event/catalog
         environment:
             DatabaseServer: mssqlserver
             DatabaseName: catalogeventdb
             DatabaseUser: sa
             DatabaseUserPassword: EventAPI!
-            ExternalCatalogBaseUrl: http://localhost:33246
+            ExternalCatalogBaseUrl: http://localhost:33247
         container_name: catalogeventapi
         ports:
-            - "33246:80"
+            - "33247:80"
         networks:
             - backend
             - frontend
         depends_on:
             - mssqlserver
+
     tokenserver:
         build: 
             context: .\TokenServiceApi
@@ -57,7 +58,7 @@ services:
         depends_on:
             - catalogevent
             - tokenserver
-
+   
     mssqlserver:
         image: "microsoft/mssql-server-linux:latest"
         environment:
@@ -65,6 +66,6 @@ services:
             SA_PASSWORD: EventAPI!
         container_name: catalogeventdb
         ports:
-            - "1446:1433"
+            - "1447:1433"
         networks:
             - backend
