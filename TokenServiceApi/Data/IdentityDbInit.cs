@@ -29,6 +29,8 @@ namespace TokenServiceApi.Data
             //Create the default Admin account and apply the Administrator role
             string user = "me@myemail.com";
             string password = "P@ssword1";
+            //string user = "lavi@lmail.com";
+            //string password = "MynameisLavi09";
             await _userManager.CreateAsync(new ApplicationUser { UserName = user, Email = user, EmailConfirmed = true }, password);
             //   await userManager.AddToRoleAsync(await userManager.FindByNameAsync(user), "Administrator");
         }

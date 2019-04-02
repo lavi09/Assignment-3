@@ -86,7 +86,7 @@ namespace WebMvc
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=catalog}/{action=Index}/{id?}");
             });
         }
     }
