@@ -85,11 +85,11 @@ namespace EventCatalogApi.Data
         {
             return new List<CatalogEvent>()
             {
-                new CatalogEvent() { CatalogTypeID=4,CatalogCategoryID=5,CatalogCityID=1,Name = "BollyWood & Bhangra Showcase at NW Folklife Festival",Month="May",Date="24",Day="Friday",Time="5.30 p.m",Address="Seattle Center Exhibition Hall",City="Seattle",State="WA", Price = 30, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/1" },
+                new CatalogEvent() { CatalogTypeID=4,CatalogCategoryID=5,CatalogCityID=1,Name = "BollyWood & Bhangra Festival",Month="May",Date="24",Day="Friday",Time="5.30 p.m",Address="Seattle Center Exhibition Hall",City="Seattle",State="WA", Price = 30, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/1" },
 
                 new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=3,CatalogCityID=4,Name = "Holi:Festival of Colors !",Month="March",Date="30",Day="Saturday",Time="9.00 p.m",Address="The Crocodile ",City="SanFrancisco",State="CA",Price= 15, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/2" },
 
-                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=3,CatalogCityID=1,Name="Blossom in your smile !",Month="April",Date="6",Day="Saturday",Time="3.00 p.m",Address="The Quad-University of Washington",City="Seattle",State="WA", Price =20, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/3" },
+                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=3,CatalogCityID=1,Name="Blossom in your smile !",Month="April",Date="6",Day="Saturday",Time="3.00 p.m",Address="The Quad-University",City="Seattle",State="WA", Price =20, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/3" },
 
                 new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=5,CatalogCityID=5,Name="Live Music with Brian James",Month="June",Date="20",Day="Sunday",Time="6.00 p.m",Address="Village Vines",City="LosAngeles",State="CA", Price = 80, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/4" },
 

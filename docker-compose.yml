@@ -31,10 +31,10 @@ services:
             dockerfile: Dockerfile
         environment: 
             ASPNETCORE_ENVIRONMENT: Development 
-            MvcClient: http://webmvc 
+            MvcClient: http://localhost:50923
         container_name: tokenservice
         ports:
-            - "5021:80"
+            - "5022:80"
         networks:
             - backend
             - frontend 
@@ -48,7 +48,7 @@ services:
         environment: 
             ASPNETCORE_ENVIRONMENT: Development 
             CatalogUrl: http://catalogevent
-            IdentityUrl: http://10.0.0.223:5021
+            IdentityUrl: http://10.0.0.223:5022
             CallBackUrl: http://localhost:50923
         container_name: webevent
         ports:
