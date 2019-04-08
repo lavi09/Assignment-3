@@ -1,7 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-using IdentityServer4;
+﻿using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -11,7 +8,7 @@ namespace TokenServiceApi
 {
     public class Config
     {
-        //public static Dictionary<string, string> ClientUrls { get; private set; }
+        
         public static Dictionary<string, string> GetUrls(IConfiguration configuration)
         {
             Dictionary<string, string> urls = new Dictionary<string, string>();
@@ -40,7 +37,7 @@ namespace TokenServiceApi
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-               // new IdentityResources.Email()
+               
             };
         }
         public static IEnumerable<Client> GetClients(Dictionary<string, string> clientUrls)
@@ -65,8 +62,7 @@ namespace TokenServiceApi
 
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
-                      //  IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,                     
                          "order",
                         "basket",
 

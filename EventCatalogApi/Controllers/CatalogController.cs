@@ -82,7 +82,7 @@ namespace EventCatalogApi.Controllers
                 await _context.CatalogEvents.LongCountAsync();
 
             var events = await _context.CatalogEvents
-                .OrderBy(c => c.Name)
+
                 .Skip(pageIndex * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
