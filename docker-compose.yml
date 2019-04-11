@@ -1,3 +1,4 @@
+
 version: "3.4"
 
 networks:
@@ -32,6 +33,7 @@ services:
         environment: 
             ASPNETCORE_ENVIRONMENT: Development 
             MvcClient: http://localhost:50923
+            BasketApiClient: http://localhost:5051
         container_name: tokenservice
         ports:
             - "5022:80"
@@ -40,6 +42,25 @@ services:
             - frontend 
         depends_on:
             - mssqlserver
+
+    cart:
+        image: cartimage
+        build: 
+            context: .\BuyTicketApi
+            dockerfile: Dockerfile
+        environment: 
+            ASPNETCORE_ENVIRONMENT: Development 
+            IdentityUrl: http://10.0.0.223:5022
+            ConnectionString: basket.data
+        container_name: buyticketapi
+        ports:
+            - "5051:80"
+        networks:
+            - backend
+            - frontend 
+        depends_on:
+            - basket.data
+            - tokenserver
 
     webmvc:
         build: 
@@ -50,6 +71,10 @@ services:
             CatalogUrl: http://catalogevent
             IdentityUrl: http://10.0.0.223:5022
             CallBackUrl: http://localhost:50923
+            CartUrl: http://cart
+            OrderUrl: http://order
+            StripePublicKey: pk_test_2mYn1FuQBQXr0YPbvIjBUOZw0021ECoOYt
+            StripePrivateKey: sk_test_UTck9qZ8Cm7PT9No2zZeTJuY00EqX4CdHz
         container_name: webevent
         ports:
             - "50923:80"
@@ -58,6 +83,30 @@ services:
         depends_on:
             - catalogevent
             - tokenserver
+            - order
+
+    order:
+        image: event/order
+        build: 
+            context: .\OrderApi
+            dockerfile: Dockerfile
+    
+        environment: 
+            ASPNETCORE_ENVIRONMENT: Development 
+            IdentityUrl: http://10.0.0.223:5022
+            SQLSERVER_HOST: catalogeventdb
+            SA_PASSWORD: EventAPI!
+            DATABASE: OrdersDb
+        container_name: ordersapi
+        ports:
+            - "5601:80"
+        networks:
+            - backend
+            - frontend 
+        depends_on:
+            - mssqlserver
+            - tokenserver 
+            - rabbitmq
    
     mssqlserver:
         image: "microsoft/mssql-server-linux:latest"
@@ -69,3 +118,24 @@ services:
             - "1447:1433"
         networks:
             - backend
+
+    basket.data:
+        image: redis
+        ports:
+            - "6380:6379"  
+        networks:
+            - backend 
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq1
+        hostname: myrabbitmq
+        ports:
+            - "15673:15672"
+            - "5673:5672"
+            - "5674:5671"
+        volumes:
+            - ~/rabbitmq:/var/lib/rabbitmq/mnesia   
+        networks:
+            - backend 
+

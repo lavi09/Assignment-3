@@ -119,6 +119,16 @@ namespace WebMvc.Services
             return events;
         }
 
+        public async Task<CatalogEvent> GetEventItemAsync (int eventid)
+        {
+            var getEventDescriptionUri = ApiPaths.Catalog.GetEvent(_remoteServiceBaseUri, eventid);
 
+            var dataString = await _client.GetStringAsync(getEventDescriptionUri);
+
+            var item = JsonConvert.DeserializeObject<CatalogEvent>(dataString);
+
+            return item; 
+
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace WebMvc.Models
 {
     public class CatalogEvent
     {
-        public int ID { get; set; }
+        public string ID { get; set; }
         public string Name { get; set; }
         public string Month { get; set; }
         public string Date { get; set; }
