@@ -1,17 +1,18 @@
 ﻿@model WebMvc.Models.CatalogEvent
 
-<form asp-controller="Cart" asp-action="AddToCart">
+<form >
     <img class="esh-catalog-thumbnail" src="@Model.PictureUrl" />
    
-    <div class="esh-catalog-name">
-        <span>@Model.Name</span>
-        </div>
+    <div class="esh-event-name">
+        <a href="@Url.Action("EventDescription", "EventDescription", new { id = @Model.ID })" ><span>@Model.Name</span></a>
+    </div>
+
     <div class="esh-catalog-date">
         <span>@Model.Month</span>
         <span>@Model.Date</span>
         <span>@Model.Day</span>
         <span>@Model.Time</span>
-        </div>
+    </div>
     <div class="esh-catalog-location">
         <span>@Model.Address</span>
         <span>@Model.City</span>
