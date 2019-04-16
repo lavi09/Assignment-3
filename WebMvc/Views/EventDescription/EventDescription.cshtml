@@ -12,11 +12,8 @@
                 <img src="@Model.PictureUrl" alt="Event Picture" class="eventImg img-fluid">
             </div>
             <div class="col-sm-4 bg-light">
-                <div class="padding fancydate">
-                    <span> @Model.Month</span>
-                    <span>@Model.Date</span>
-                </div>
-                <div class="padding">
+                
+                 <div class="padding">
                     <H2>@Model.Name</H2>
                 </div>               
                 <div class="padding grayText">
@@ -38,10 +35,8 @@
 
                     <input type="hidden" asp-for="@Model.ID" name="id" />
                     <input type="hidden" asp-for="@Model.Name" name="name" />
-                    <input type="hidden" asp-for="@Model.Month" name="month" />
-                    <input type="hidden" asp-for="@Model.Date" name="date" />
-                    <input type="hidden" asp-for="@Model.Day" name="day" />
-                    <input type="hidden" asp-for="@Model.Time" name="time" />
+        
+
                     <input type="hidden" asp-for="@Model.Address" name="address" />
                     <input type="hidden" asp-for="@Model.City" name="city" />
                     <input type="hidden" asp-for="@Model.State" name="state" />
@@ -65,10 +60,11 @@
          
             <div class="col-sm-4">
                 <h3>Date and Time</h3>
-                <p>@Model.Month  @Model.Date<br /> @Model.Day  <br/>@Model.Time</p>
+                <p>@Model.StartDate<br />@Model.StartTime - @Model.EndTime</p><!--Date and time of the event-->
                 <h3>Location</h3>
-                <p>@Model.Address<br />@Model.City, @Model.State </p>
-               
+                <p>@Model.Address<br />@Model.City, @Model.State @Model.Zipcode</p><!--Location of the event-->
+                <!-- <h3>View Map</h3>-->
+                <!--link to the Google map at bottom of page-->
             </div>
         </div>
     </div>

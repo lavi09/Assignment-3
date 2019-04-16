@@ -15,10 +15,8 @@
             <img src="~/images/banner.jpg" alt="ASP.NET" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
+                    Browse the fun events happeining in your city !
+                    
                 </p>
             </div>
         </div>
@@ -26,10 +24,8 @@
             <img src="~/images/banner-2.jpg" alt="Visual Studio" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525031&clcid=0x409">
-                        Learn More
-                    </a>
+                    Book some tickets for your romantic date night !
+                    
                 </p>
             </div>
         </div>
@@ -37,10 +33,8 @@
             <img src="~/images/banner-3.jpg" alt="Package Management" class="img-responsive" />
             <div class="carousel-caption" role="option">
                 <p>
-                    Bring in libraries from NuGet, Bower, and npm, and automate tasks using Grunt or Gulp.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525029&clcid=0x409">
-                        Learn More
-                    </a>
+                    Create event of your choice and host it for your family and friends!
+                   
                 </p>
             </div>
         </div>
@@ -56,22 +50,30 @@
     </a>
 </div>
 
-<section class="esh-catalog-filters">
+
+
+<section class="esh-search-filters">
     <div class="container">
-        <form asp-action="Index" asp-controller="Catalog" method="post">
-            <label class="esh-catalog-label" data-title="category">
-                <select asp-for="@Model.CategoryFilterApplied" asp-items="@Model.Categories" class="esh-catalog-filter"></select>
-            </label>
-            <label class="esh-catalog-label" data-title="type">
-                <select asp-for="@Model.TypesFilterApplied" asp-items="@Model.Types" class="esh-catalog-filter"></select>
-            </label>
-            <label class="esh-catalog-label" data-title="city">
-                <select asp-for="@Model.CitiesFilterApplied" asp-items="@Model.Cities" class="esh-catalog-filter"></select>
-            </label>
-            <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+        <form asp-action="Search" asp-controller="Catalog" method="post" style="height: 100px; padding :30px">
+            <p class="esh-event-filters">
+               
+                Looking For: <input type="text" name="SearchEventName" placeholder="Washington State Fair">
+                In: <input type="text" name="SearchEventCity" placeholder="Bellevue">
+            
+
+                <label class="esh-event-label " data-title="eventsdate">
+
+                  On:  <select asp-for="@Model.DatesFilterApplied" asp-items="@Model.Dates" class="esh-event-filter"></select>
+                </label>
+                <input type="submit" value="Search" />
+            </p>
         </form>
     </div>
+    <div>
+        <h1>Live Your Best Life</h1>
+    </div>
 </section>
+
 <div class="container">
     @if (Model.CatalogEvents.Count() > 0)
     {
@@ -95,4 +97,33 @@
         </div>
     }
 </div>
+<section class="top-categories">
+    <div class="container">
+        <p>
+            <center>
+                <h2>Categories to explore</h2>
+            </center>
+        </p>
+    </div>
+    <div class="container">
+        @if (Model.Categories.Count() > 0)
+
+        {
+
+
+            <div class="esh-event row">
+                @foreach (var category in Model.CatalogCategoriesWithImage)
+                {
+
+                    <div class="esh-event-item col-md-4">
+                        @Html.Partial("_category", category)
+                    </div>
+
+                }
+            </div>
+
+        }
+
+    </div>
+</section>
 

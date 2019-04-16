@@ -1,0 +1,51 @@
+﻿@model WebMvc.Models.CatalogEvent
+
+
+<form asp-controller="EventDescription" asp-action="EventDescription">
+
+    <input class="img-fluid img-thumbnail" type="image" name="clickeventdetails" src="@Model.PictureUrl" border="0" alt="EventImage" style="width:320px;height:150px" />
+    
+
+    <input type="hidden" asp-for="@Model.ID" name="id" />
+
+</form>
+
+<form asp-controller="event" >
+    @*<input class="esh-event-button" type="image" name="clickeventdetails" src="~/images/wish.png" border="0" alt="EventWishListImage" style="width:50px;height:50px" />*@
+
+    <div class="esh-event-title">
+        <span>@Model.Name</span>
+    </div>
+    <div class="esh-event-date">
+        <span>@Model.StartDate.ToShortDateString()</span>
+    </div>
+    <div class="esh-event-address">
+        <span>@Model.Address</span><br />
+        <span>@Model.City</span>
+        <span>@Model.State</span>
+        <span>@Model.Zipcode</span>
+    </div>
+    @if (Model.Price == 0)
+    {
+        <span class="esh-event-price-free">FREE</span>
+    }
+    else
+    {
+
+        <span class="esh-event-price">Starts at $@Model.Price.ToString("N2")</span>
+
+    }
+    <div class="esh-event-category">
+        <a href="@Url.Action("EventSearchByCategory", "EventCatalog", new { EventCategoryFilterApplied = @Model.CatalogCategoryID})"><span>@Model.CatalogCategory</span></a>
+    </div>
+    <input type="hidden" asp-for="@Model.CatalogCategory" name="eventcategory" />
+    <input type="hidden" asp-for="@Model.CatalogCategoryID" name="eventcategoryId" />
+    <input type="hidden" asp-for="@Model.CatalogType" name="eventtype" />
+    <input type="hidden" asp-for="@Model.CatalogTypeID" name="eventtypeId" />
+    <input type="hidden" asp-for="@Model.Address" name="eventAddress" />
+    <input type="hidden" asp-for="@Model.City" name="eventCity" />
+    <input type="hidden" asp-for="@Model.ID" name="id" />
+    <input type="hidden" asp-for="@Model.Name" name="title" />
+    <input type="hidden" asp-for="@Model.PictureUrl" name="imageUrl" />
+    <input type="hidden" asp-for="@Model.Price" name="price" />
+</form>

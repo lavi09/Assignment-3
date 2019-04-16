@@ -11,18 +11,18 @@ using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 using Microsoft.AspNetCore.Http;
 using Eventzon.Services.CartApi.Model;
-using BuyTicketApi.Model;
+using CartApi.Model;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.IdentityModel.Tokens.Jwt;
 using Newtonsoft.Json;
 using Eventzon.Services.CartApi.Infrastructure.Filters;
 using Autofac;
-//using BuyTicketApi.Messaging.Consumers;
+using CartApi.Messaging.Consumers;
 using MassTransit;
 using Autofac.Extensions.DependencyInjection;
 using MassTransit.Util;
-using BuyTicketApi.Infrastructure.Filters;
+using CartApi.Infrastructure.Filters;
 
 namespace CartApi
 {
@@ -97,36 +97,35 @@ namespace CartApi
 
             var builder = new ContainerBuilder();
 
-            //// register a specific consumer
+            // register a specific consumer
 
-            //builder.RegisterType<OrderCompletedEventConsumer>();
+            builder.RegisterType<OrderCompletedEventConsumer>();
 
-            //builder.Register(context =>
-            //{
-            //    var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
-            //    {
-
-
-            //        var host = cfg.Host(new Uri("rabbitmq://rabbitmq/"), "/", h =>
-            //        {
-            //            h.Username("guest");
-            //            h.Password("guest");
-            //        });
+            builder.Register(context =>
+            {
+                var busControl = Bus.Factory.CreateUsingRabbitMq(cfg =>
+                {
 
 
-            //        // https://stackoverflow.com/questions/39573721/disable-round-robin-pattern-and-use-fanout-on-masstransit
-            //        cfg.ReceiveEndpoint(host, "Eventzon" + Guid.NewGuid().ToString(), e =>
-            //        {
-            //            e.LoadFrom(context);
+                    var host = cfg.Host(new Uri("rabbitmq://rabbitmq/"), "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
 
-            //        });
-            //    });
 
-            //    return busControl;
-            //})
-            //    .SingleInstance()
-            //    .As<IBusControl>()
-            //    .As<IBus>();
+                    cfg.ReceiveEndpoint(host, "Eventzon" + Guid.NewGuid().ToString(), e =>
+                    {
+                        e.LoadFrom(context);
+
+                    });
+                });
+
+                return busControl;
+            })
+                .SingleInstance()
+                .As<IBusControl>()
+                .As<IBus>();
 
             builder.Populate(services);
             ApplicationContainer = builder.Build();
@@ -182,11 +181,11 @@ namespace CartApi
                .UseSwaggerUI(c =>
                {
                    c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "CartApi V1");
-                   //c.ConfigureOAuth2("basketswaggerui", "", "", "Basket Swagger UI");
+              
                });
-            //var bus = ApplicationContainer.Resolve<IBusControl>();
-            //var busHandle = TaskUtil.Await(() => bus.StartAsync());
-            //lifetime.ApplicationStopping.Register(() => busHandle.Stop());
+            var bus = ApplicationContainer.Resolve<IBusControl>();
+            var busHandle = TaskUtil.Await(() => bus.StartAsync());
+            lifetime.ApplicationStopping.Register(() => busHandle.Stop());
         }
 
 

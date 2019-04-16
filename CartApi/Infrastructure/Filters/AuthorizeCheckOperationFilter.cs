@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BuyTicketApi.Infrastructure.Filters
+namespace CartApi.Infrastructure.Filters
 {
     public class AuthorizeCheckOperationFilter:IOperationFilter
     {

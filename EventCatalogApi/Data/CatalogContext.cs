@@ -52,6 +52,8 @@ namespace EventCatalogApi.Data
             builder.Property(c => c.Category)
                 .IsRequired()
                 .HasMaxLength(100);
+            builder.Property(c => c.PictureUrl)
+                .IsRequired();
 
         }
 
@@ -82,14 +84,23 @@ namespace EventCatalogApi.Data
                 .IsRequired();
             builder.Property(c => c.City)
                 .IsRequired();
-            builder.Property(c => c.Month)
+            builder.Property(c => c.Zipcode)
+               .IsRequired();
+            builder.Property(c => c.StartDate)
                 .IsRequired();
-            builder.Property(c => c.Date)
-                .IsRequired();
-            builder.Property(c => c.Day)
-            .IsRequired();
-            builder.Property(c => c.Time)
-            .IsRequired();
+            builder.Property(c => c.EndDate)
+               .IsRequired();
+            
+            
+            //builder.Property(c => c.Month)
+            //    .IsRequired();
+            //builder.Property(c => c.Date)
+            //    .IsRequired();
+            //builder.Property(c => c.Day)
+            //.IsRequired();
+          
+            //builder.Property(c => c.Time)
+            //.IsRequired();
             builder.Property(c => c.Price)
                 .IsRequired();
             builder.HasOne(c => c.CatalogCategory)

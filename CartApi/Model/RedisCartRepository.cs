@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BuyTicketApi.Model
+namespace CartApi.Model
 {
     public class RedisCartRepository : ICartRepository
     {

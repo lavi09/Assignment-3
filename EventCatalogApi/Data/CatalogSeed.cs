@@ -70,13 +70,13 @@ namespace EventCatalogApi.Data
         {
             return new List<CatalogCategory>()
             {
-                new CatalogCategory() { Category= "Arts"},
-                new CatalogCategory() { Category="Business"},
-                new CatalogCategory() { Category="Community"},
-                new CatalogCategory() { Category="Food & Drink"},
-                new CatalogCategory() { Category= "Music"},
-                new CatalogCategory() { Category= "Sports & Fitness"},
-                new CatalogCategory() { Category= "Travel & Outdoor"},
+                new CatalogCategory() { Category= "Arts",PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/100" },
+                new CatalogCategory() { Category="Business",PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/101" },
+                new CatalogCategory() { Category="Community",PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/102" },
+                new CatalogCategory() { Category="Food & Drink",PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/103" },
+                new CatalogCategory() { Category= "Music",PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/104" },
+                new CatalogCategory() { Category= "Sports & Fitness",PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/105" },
+                new CatalogCategory() { Category= "Travel & Outdoor",PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/106" },
 
             };            
         }
@@ -85,35 +85,35 @@ namespace EventCatalogApi.Data
         {
             return new List<CatalogEvent>()
             {
-                new CatalogEvent() { CatalogTypeID=4,CatalogCategoryID=5,CatalogCityID=1,Name = "BollyWood & Bhangra Festival",Month="May",Date="24",Day="Friday",Time="5.30 p.m",Address="Seattle Center Exhibition Hall",City="Seattle",State="WA", Price = 30, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/1" },
+                new CatalogEvent() { CatalogTypeID=4,CatalogCategoryID=5,CatalogCityID=1,Name = "BollyWood & Bhangra Festival",StartDate = new DateTime(2019, 4, 09, 7, 10, 0), EndDate = new DateTime(2019, 04, 10, 9, 15, 0),Address="Seattle Center Exhibition Hall",City="Seattle",State="WA",Zipcode="98156", Price = 30, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/1" },
 
-                new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=3,CatalogCityID=4,Name = "Holi:Festival of Colors !",Month="March",Date="30",Day="Saturday",Time="9.00 p.m",Address="The Crocodile ",City="SanFrancisco",State="CA",Price= 15, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/2" },
+                new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=3,CatalogCityID=4,Name = "Holi:Festival of Colors !", StartDate = new DateTime(2019, 5, 27, 20, 30, 0), EndDate = new DateTime(2019, 5, 29, 23, 0, 0),Address="The Crocodile ",City="SanFrancisco",State="CA",Zipcode="90001",Price= 15, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/2" },
 
-                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=3,CatalogCityID=1,Name="Blossom in your smile !",Month="April",Date="6",Day="Saturday",Time="3.00 p.m",Address="The Quad-University",City="Seattle",State="WA", Price =20, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/3" },
+                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=3,CatalogCityID=1,Name="Blossom in your smile !",StartDate = new DateTime(2019, 6, 10, 12, 0, 0), EndDate = new DateTime(2019, 6, 8, 12, 0, 0),Address="The Quad-University",City="Seattle",State="WA",Zipcode="98156", Price =20, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/3" },
 
-                new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=5,CatalogCityID=5,Name="Live Music with Brian James",Month="June",Date="20",Day="Sunday",Time="6.00 p.m",Address="Village Vines",City="LosAngeles",State="CA", Price = 80, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/4" },
+                new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=5,CatalogCityID=5,Name="Live Music with Brian James",StartDate = new DateTime(2019, 6, 27, 9, 0, 0), EndDate = new DateTime(2019, 6, 27, 17, 30, 0),Address="Village Vines",City="LosAngeles",State="CA",Zipcode="90002", Price = 80, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/4" },
 
-                new CatalogEvent() { CatalogTypeID=6,CatalogCategoryID=2, CatalogCityID=6,Name="Daring Women",Month="May",Date="21",Day="Tuesday",Time="1.00 p.m", Address="Block 41",City="Brooklyn",State="NY", Price = 95, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/5" },
+                new CatalogEvent() { CatalogTypeID=6,CatalogCategoryID=2, CatalogCityID=6,Name="Daring Women",StartDate = new DateTime(2019, 4, 23, 20, 0, 0), EndDate = new DateTime(2019, 4, 23, 22, 0, 0), Address="Block 41",City="Brooklyn",State="NY",Zipcode="10101", Price = 95, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/5" },
 
-                new CatalogEvent() { CatalogTypeID=6,CatalogCategoryID=4,CatalogCityID=2,Name="Downtown Issaquah Wine & Art Walk",Month="April", Date="6",Day="Saturday",Time="6.00 p.m",Address="Historic Shell Station",City="Issaquah",State="WA", Price = 25, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/6" },
+                new CatalogEvent() { CatalogTypeID=6,CatalogCategoryID=4,CatalogCityID=2,Name="Downtown Issaquah Wine & Art Walk", StartDate = new DateTime(2019, 5, 10, 0, 0, 0), EndDate = new DateTime(2019, 5, 13, 0, 0, 0),Address="Historic Shell Station",City="Issaquah",State="WA",Zipcode="97458", Price = 25, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/6" },
 
-                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=7,CatalogCityID=1,Name="Skagit Valley Tulip Festival",Month="April",Date="10",Day="Friday",Time="12.00 a.m",Address="Skagit Valley",City="Seattle",State="WA", Price = 70, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/7"  },
+                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=7,CatalogCityID=1,Name="Skagit Valley Tulip Festival",StartDate = new DateTime(2019, 5, 23, 12, 0, 0), EndDate = new DateTime(2019, 5, 24, 14, 0, 0),Address="Skagit Valley",City="Seattle",State="WA", Zipcode="97880",Price = 70, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/7"  },
 
-                new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=6,CatalogCityID=7,Name="Zumba Pink Party",Month="October",Date="13",Day="Friday",Time="5.00 p.m",Address="Union Park",City="Chicago",State="IL", Price = 90, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/8" },
+                new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=6,CatalogCityID=7,Name="Zumba Pink Party",StartDate = new DateTime(2019, 4, 29, 11, 0, 0), EndDate = new DateTime(2019, 4, 30, 12, 0, 0),Address="Union Park",City="Chicago",State="IL",Zipcode="62462", Price = 90, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/8" },
 
-                new CatalogEvent() { CatalogTypeID=4,CatalogCategoryID=6,CatalogCityID=1,Name="Bubble Run",Month="January",Date="1",Day="Wednesday",Time="9.00 a.m",Address="Elm Coffee Roasters",City="Seattle",State="WA", Price = 50, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/9" },
+                new CatalogEvent() { CatalogTypeID=4,CatalogCategoryID=6,CatalogCityID=1,Name="Bubble Run",StartDate = new DateTime(2019, 4, 10, 7, 10, 0), EndDate = new DateTime(2019, 4, 10, 9, 15, 0),Address="Elm Coffee Roasters",City="Seattle",State="WA", Zipcode="91008",Price = 50, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/9" },
 
-                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=7,CatalogCityID=8,Name="Disney Cruise 2019 ",Month="July",Date="7",Day="Friday",Time="4.00 p.m",Address="Orlando" ,City="Orlando",State="FL",Price = 1000, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/10" },
+                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=7,CatalogCityID=8,Name="Disney Cruise 2019 ",StartDate = new DateTime(2019, 4, 16, 20, 30, 0), EndDate = new DateTime(2019, 4, 16, 23, 0, 0),Address="Orlando" ,City="Orlando",State="FL",Zipcode="32703",Price = 1000, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/10" },
 
-                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=2,CatalogCityID=1,Name="Washington State Spring Fair",Month="April", Date="14",Day="Sunday",Time="12.00 a.m",Address="Washington state Fair Events Center",City="Puyallup",State="WA", Price = 10, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/11" },
+                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=2,CatalogCityID=1,Name="Washington State Spring Fair",StartDate = new DateTime(2019, 7, 23, 20, 0, 0), EndDate = new DateTime(2019, 7, 23, 22, 0, 0),Address="Washington state Fair Events Center",City="Puyallup",State="WA",Zipcode="96320", Price = 10, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/11" },
 
-                new CatalogEvent() { CatalogTypeID=3,CatalogCategoryID=1,CatalogCityID=3,Name="Bellevue Art Museum Fair", Month="July",Date="26",Day="Friday",Time="9.30 a.m",Address="Bellevue Arts Museum Fair",City="Bellevue",State="WA",Price = 40, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/12" },
+                new CatalogEvent() { CatalogTypeID=3,CatalogCategoryID=1,CatalogCityID=3,Name="Bellevue Art Museum Fair", StartDate = new DateTime(2019, 6, 5, 0, 0, 0), EndDate = new DateTime(2019, 6, 9, 0, 0, 0),Address="Bellevue Arts Museum Fair",City="Bellevue",State="WA",Zipcode="98007",Price = 40, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/12" },
 
-                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=7,CatalogCityID=1,Name="Seattle 101 ",Month="March",Date="28",Day="Thursday",Time="12.00 P.M",Address="Seattle Free Walking Hours",City="Seattle",State="WA",Price=10,PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/13" },
+                new CatalogEvent() { CatalogTypeID=2,CatalogCategoryID=7,CatalogCityID=1,Name="Seattle 101 ",StartDate = new DateTime(2019, 8, 10, 12, 0, 0), EndDate = new DateTime(2019, 8, 12, 14, 0, 0),Address="Seattle Free Walking Hours",City="Seattle",State="WA",Zipcode="97138",Price=10,PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/13" },
 
-                new CatalogEvent() { CatalogTypeID=1,CatalogCategoryID=2,CatalogCityID=1,Name="Innoventures",Month="March",Date="28",Day="Thursday",Time="10.00 a.m",Address="Columbia city Theatre ",City="Seattle",State="WA",Price = 20, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/14" },
+                new CatalogEvent() { CatalogTypeID=1,CatalogCategoryID=2,CatalogCityID=1,Name="Innoventures",StartDate = new DateTime(2019, 6, 10, 11, 0, 0), EndDate = new DateTime(2019, 6, 10, 12, 0, 0),Address="Columbia city Theatre ",City="Seattle",State="WA",Zipcode="98236",Price = 20, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/14" },
 
-                new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=5,CatalogCityID=1,Name="Capitol Hill Block Party 2019",Month="July",Date="19",Day="Friday",Time="3.00 p.m",Address="Capitol hill block  Party",City="Seattle",State="WA", Price = 100, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/15" }
+                new CatalogEvent() { CatalogTypeID=5,CatalogCategoryID=5,CatalogCityID=1,Name="Capitol Hill Block Party 2019",StartDate = new DateTime(2019, 6, 25, 12, 0, 0), EndDate = new DateTime(2019, 6, 26, 12, 0, 0),Address="Capitol hill block  Party",City="Seattle",State="WA",Zipcode="98424", Price = 100, PictureUrl = "http://externalcatalogbaseurltobereplaced/api/pic/15" }
 
             };
         }

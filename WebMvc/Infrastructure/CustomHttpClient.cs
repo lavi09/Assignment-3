@@ -17,10 +17,11 @@ namespace WebMvc.Infrastructure
         private HttpClient _client;
         private IHttpContextAccessor _httpContextAccessor;
 
-        public CustomHttpClient(ILogger<CustomHttpClient> logger)
+        public CustomHttpClient(ILogger<CustomHttpClient> logger, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _client = new HttpClient();
+            _httpContextAccessor = httpContextAccessor;
         }        
 
         public async Task<string> GetStringAsync(string uri, string authorizationToken = null, string authorizationMethod = "Bearer")
@@ -50,16 +51,10 @@ namespace WebMvc.Infrastructure
             if (authorizationToken != null)
             {
 
-
                 requestMessage.Headers.Authorization = new AuthenticationHeaderValue(authorizationMethod, authorizationToken);
 
             }
 
-
-            //if (requestId != null)
-            //{
-            //    requestMessage.Headers.Add("x-requestid", requestId);
-            //}
 
             var response = await _client.SendAsync(requestMessage);
 

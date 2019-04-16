@@ -1,0 +1,75 @@
+﻿@model WebMvc.ViewModels.EventFiltersCatalogViewModel
+
+@{
+    ViewData["Title"] = "EventSearchByCategory";
+}
+
+<section class="esh-event-filters">
+
+    <div class="container">
+
+        <form asp-action="EventSearchByCategory" asp-controller="Catalog" method="post">
+            <label class="esh-catalog-label" data-title="category">
+                <select asp-for="@Model.CategoryFilterApplied" asp-items="@Model.Categories" class="esh-event-filter"></select>
+            </label>
+            <label class="esh-catalog-label" data-title="type">
+                <select asp-for="@Model.TypesFilterApplied" asp-items="@Model.Types" class="esh-event-filter"></select>
+            </label>
+            <label class="esh-catalog-label" data-title="AllCities">
+                <select asp-for="@Model.CitiesFilterApplied" asp-items="@Model.Cities" class="esh-event-filter"></select>
+            </label>
+            <label class="esh-catalog-label" data-title="AllCities">
+                <select asp-for="@Model.DatesFilterApplied" asp-items="@Model.Dates" class="esh-event-filter"></select>
+            </label>
+            <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+        </form>
+
+    </div>
+
+</section>
+
+<div class="container">
+
+    @if (Model.CatalogEvents.Count() > 0)
+
+    {
+
+        @Html.Partial("_pagination", Model.PaginationInfo)
+
+
+    <div class="row text-center text-lg-left">
+        @*  <div class="esh-catalog-items row">*@
+
+
+        @foreach (var catalogItem in Model.CatalogEvents)
+        {
+            <div class="col-lg-3 col-md-4 col-xs-6">
+               @* <div class="esh-catalog-item col-md-4">*@
+
+                    @Html.Partial("_event", catalogItem)
+
+                </div>
+
+                }
+
+            </div>
+
+
+
+            @Html.Partial("_pagination", Model.PaginationInfo)
+
+        }
+
+        else
+
+        {
+
+        <div class="esh-catalog-items row">
+
+            THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
+
+        </div>
+
+        }
+
+    </div>

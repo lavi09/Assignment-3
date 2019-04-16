@@ -53,6 +53,11 @@ namespace WebMvc.Infrastructure
                 return $"{baseUri}catalogcategories";
             }
 
+            public static string GetAllCatalogCategoriesImage(string baseUri, int page, int take)
+            {
+                return $"{baseUri}catalogcategoriesimage?pageSize={take}&pageIndex={page}";
+            }
+
             public static string GetAllTypes(string baseUri)
             {
                 return $"{baseUri}catalogtypes";
@@ -62,6 +67,40 @@ namespace WebMvc.Infrastructure
             {
                 return $"{baseUri}catalogcities";
             }
+            //extra
+            public static string GetEventsWithName(string baseUri, string name, int page, int take)
+            {
+                return $"{baseUri}events/withname/{name}?pageSize={take}&pageIndex={page}";
+            }
+
+            public static string GetEventsWithNameCityDate(string baseUri, string name, string city, string date, int page, int take)
+            {
+                return $"{baseUri}events/name/{name}/city/{city}/date/{date}?pageSize={take}&pageIndex={page}";
+            }
+
+            public static string GetCatalogEventsInCity(string baseUri, string city)
+            {
+                return $"{baseUri}Events/withcity/{city}";
+            }
+
+            public static string GetEventsByAllFilters(string baseUri,int page, int take, int? eventcategory, int? eventtype, String date, String city)
+            {
+                var filterQs = string.Empty;
+
+                if (eventcategory.HasValue || eventtype.HasValue || city != null || date != null)
+                {
+
+                    var eventcategoryQs = (eventcategory.HasValue) ? eventcategory.Value.ToString() : "null";
+                    var eventtypeQs = (eventtype.HasValue) ? eventtype.Value.ToString() : "null";
+                    var eventdateQs = date ?? "All Days";
+                    var eventcityQs = city ?? "All";
+                    filterQs = $"/type/{eventtypeQs}/category/{eventcategoryQs}/date/{eventdateQs}/city/{eventcityQs}";
+                }
+              
+                return $"{baseUri}eventsByFilters{filterQs}?pageIndex={page}&pageSize={take}";
+            }
+
+
         }
 
         public static class Order

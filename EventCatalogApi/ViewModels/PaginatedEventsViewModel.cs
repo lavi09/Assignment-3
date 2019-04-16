@@ -14,5 +14,12 @@ namespace EventCatalogApi.ViewModels
         public long Count { get; set; }
 
         public IEnumerable<TEntity> Data { get; set; }
+        public PaginatedEventsViewModel(int pageIndex, int pageSize, long count, IEnumerable<TEntity> data)
+        {
+            this.PageSize = pageSize;
+            this.PageIndex = pageIndex;
+            this.Count = count;
+            this.Data = data;
+        }
     }
 }

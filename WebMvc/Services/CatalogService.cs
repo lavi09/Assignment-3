@@ -18,7 +18,7 @@ namespace WebMvc.Services
         public CatalogService(IHttpClient httpClient, IConfiguration configuration)
         {
             _client = httpClient;
-            _remoteServiceBaseUri = $"{configuration["CatalogUrl"]}/api/catalog/";
+            _remoteServiceBaseUri = $"{configuration["CatalogUrl"]}/api/event/";
         }
 
         public async Task<Catalog> GetCatalogEventsAsync(int page, int take, int? category, int? type, int? city)
@@ -34,8 +34,8 @@ namespace WebMvc.Services
 
         public async Task<IEnumerable<SelectListItem>> GetCategoriesAsync()
         {
-            var brandUri = ApiPaths.Catalog.GetAllCategories(_remoteServiceBaseUri);
-            var dataString = await _client.GetStringAsync(brandUri);
+            var categoryUri = ApiPaths.Catalog.GetAllCategories(_remoteServiceBaseUri);
+            var dataString = await _client.GetStringAsync(categoryUri);
 
             var events = new List<SelectListItem>
             {
@@ -129,6 +129,88 @@ namespace WebMvc.Services
 
             return item; 
 
+        }
+
+        //extra
+
+        public IEnumerable<SelectListItem> GetDates()
+        {
+            List<String> eventDates = new List<string> { "Today", "Tomorrow", "This week", "This weekend", "Next week", "Next weekend", "This month", "Next month" };
+            var items = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = "All Days", Text = "All Days", Selected = true }
+            };
+            foreach (var eventDate in eventDates)
+            {
+                items.Add(new SelectListItem()
+                {
+                    Value = eventDate,
+
+                    Text = eventDate
+                });
+            }
+            return items;
+        }
+
+        public async Task<Catalog> GetEventsWithNameAsync(string name, int page, int take)
+        {
+            var eventswithnameUri = ApiPaths.Catalog.GetEventsWithName(_remoteServiceBaseUri, name, page, take);
+            var dataString = await _client.GetStringAsync(eventswithnameUri);
+            var response = JsonConvert.DeserializeObject<Catalog>(dataString);
+            return response;
+        }
+
+        public async Task<Catalog> GetEventsWithNameCityDateAsync(string name, string city, string date, int page, int take)
+        {
+            var eventswithnameUri = ApiPaths.Catalog.GetEventsWithNameCityDate(_remoteServiceBaseUri,name, city, date, page, take);
+            var dataString = await _client.GetStringAsync(eventswithnameUri);
+            var response = JsonConvert.DeserializeObject<Catalog>(dataString);
+
+            return response;
+        }
+
+
+        public async Task<Catalog> GetEventsByAllFiltersAsync(int page, int take, int? category, int? type, string date, string city)
+        {
+            var alleventsUri = ApiPaths.Catalog.GetEventsByAllFilters(_remoteServiceBaseUri, page, take, category, type, date, city);
+            var dataString = await _client.GetStringAsync(alleventsUri);
+            var response = JsonConvert.DeserializeObject<Catalog>(dataString);
+            return response;
+        }
+
+        public async Task<Catalog> GetEventsInCityAsync(string city)
+        {
+            var allEventsCityUri = ApiPaths.Catalog.GetCatalogEventsInCity(_remoteServiceBaseUri, city);
+            var dataString = await _client.GetStringAsync(allEventsCityUri);
+            var response = JsonConvert.DeserializeObject<Catalog>(dataString);
+            return response;
+        }
+        //public async Task<CatalogCi> GetCityInfo(string city)
+        //{
+        //    var allEventsCityUri = ApiPaths.Catalog.GetCityDescription(_remoteServiceBaseUrl, city);
+        //    var dataString = await _apiClient.GetStringAsync(allEventsCityUri);
+        //    var response = JsonConvert.DeserializeObject<EventCityCatalog>(dataString);
+
+        //    return response;
+
+        //}
+
+        async Task<CatalogCa> ICatalogService.GetCatalogCategoriesWithImageAsync(int page, int take)
+        {
+           var getCatalogCategoriesUri = ApiPaths.Catalog.GetAllCatalogCategoriesImage(_remoteServiceBaseUri, page, take);
+            var dataString = await _client.GetStringAsync(getCatalogCategoriesUri);
+            var response = JsonConvert.DeserializeObject<CatalogCa>(dataString);
+
+            return response;
+        }
+
+        public async Task<List<CatalogCategory>> GetCategoriesforsearchAsync()
+        {
+            var getCatalogCategoriesUri = ApiPaths.Catalog.GetAllCategories(_remoteServiceBaseUri);
+            var dataString = await _client.GetStringAsync(getCatalogCategoriesUri);
+            var response = JsonConvert.DeserializeObject<List<CatalogCategory>>(dataString);
+
+            return response;
         }
     }
 }
