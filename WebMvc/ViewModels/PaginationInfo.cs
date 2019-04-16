@@ -7,7 +7,7 @@ namespace WebMvc.ViewModels
 {
     public class PaginationInfo
     {
-        public long TotalEvents { get; set; }
+        public int TotalEvents { get; set; }
         public int EventsPerPage { get; set; }
 
         public int ActualPage { get; set; }

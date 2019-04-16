@@ -35,6 +35,18 @@ namespace EventCatalogApi
                 options =>
                     options.UseSqlServer(connectionString)
                 );
+            services.AddSwaggerGen(options =>
+            {
+                options.DescribeAllEnumsAsStrings();
+                options.SwaggerDoc("v1",
+                    new Swashbuckle.AspNetCore.Swagger.Info
+                    {
+                        Title = "Event catalog HTTP API",
+                        Version = "V1",
+                        Description = "Display catalog of Events",
+                        TermsOfService = "Terms of service"
+                    });
+            });
 
         }
 
@@ -44,6 +56,12 @@ namespace EventCatalogApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseSwaggerUI()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint($"/swagger/v1/swagger.json",
+                        "Eventcatalogapi v1");
+                });
 
             app.UseMvc();
         }

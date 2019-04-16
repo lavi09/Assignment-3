@@ -7,21 +7,20 @@ using WebMvc.Models;
 
 namespace WebMvc.ViewModels
 {
-    public class CatalogIndexViewModel
+    public class EventFiltersCatalogViewModel
     {
-        public PaginationInfo PaginationInfo { get; set; }
         public IEnumerable<CatalogEvent> CatalogEvents { get; set; }
         public IEnumerable<SelectListItem> Categories { get; set; }
         public IEnumerable<SelectListItem> Types { get; set; }
         public IEnumerable<SelectListItem> Cities { get; set; }
+        public IEnumerable<SelectListItem> Dates { get; set; }   
 
+       
         public int? CategoryFilterApplied { get; set; }
         public int? TypesFilterApplied { get; set; }
-        public int? CitiesFilterApplied { get; set; }
-
-        public IEnumerable<CatalogCategory> CatalogCategoriesWithImage { get; set; }
-        public IEnumerable<SelectListItem> Dates { get; set; }
+        public String CitiesFilterApplied { get; set; }
         public String DatesFilterApplied { get; set; }
 
+        public PaginationInfo PaginationInfo { get; set; }
     }
 }

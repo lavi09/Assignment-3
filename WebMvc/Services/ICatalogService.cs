@@ -14,9 +14,20 @@ namespace WebMvc.Services
         Task<IEnumerable<SelectListItem>> GetCategoriesAsync();
         Task<IEnumerable<SelectListItem>> GetTypesAsync();
         Task<IEnumerable<SelectListItem>> GetCitiesAsync();
+        IEnumerable<SelectListItem> GetDates();
 
         Task<CatalogEvent> GetEventItemAsync(int eventid);
 
+        //extra
+        Task<Catalog> GetEventsWithNameAsync(string name, int page, int take);
 
+        Task<Catalog> GetEventsWithNameCityDateAsync(string name, string city, string date, int page, int take);
+
+        Task<CatalogCa> GetCatalogCategoriesWithImageAsync(int page, int take);
+
+        Task<Catalog> GetEventsByAllFiltersAsync(int page, int take, int? brand, int? type, String date, String city);
+        //Task<CatalogCi> GetCityInfo(string city);
+        Task<Catalog> GetEventsInCityAsync(string city);
+        Task<List<CatalogCategory>> GetCategoriesforsearchAsync();
     }
 }

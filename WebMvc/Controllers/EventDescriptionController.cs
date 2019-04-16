@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebMvc.Models;
 using WebMvc.Services;
 using WebMvc.ViewModels;
 
@@ -16,9 +17,10 @@ namespace WebMvc.Controllers
 
             _eventservice = eventservice;
 
-        public async Task<IActionResult> EventDescription(int id)
+        public async Task<IActionResult> EventDescription(CatalogEvent eventDescriptiontemp)
         {
-           
+            int id = 0;
+            Int32.TryParse(eventDescriptiontemp.ID, out id);
             var eventDescription = await _eventservice.GetEventItemAsync(id);           
 
             var vm = new EventDescriptionViewModel
@@ -30,18 +32,19 @@ namespace WebMvc.Controllers
                     State = eventDescription.State,                    
                     PictureUrl = eventDescription.PictureUrl,
                     Price = eventDescription.Price,
-                    Date = eventDescription.Date,   
-                    Day= eventDescription.Day,
-                    Month= eventDescription.Month,
+                    StartDate = eventDescription.StartDate.ToString("D"),
+                    EndDate = eventDescription.EndDate.ToString("D"),
+                    StartTime = eventDescription.StartDate.ToString("h:mm tt"),
+                    EndTime = eventDescription.EndDate.ToString("h:mm tt"),
                     CatalogTypeID = eventDescription.CatalogTypeID,
                     CatalogCategoryID= eventDescription.CatalogCategoryID,
                     CatalogType = eventDescription.CatalogType,
                     CatalogCategory = eventDescription.CatalogCategory,
-                    Time = eventDescription.Time
-                    
-                    
-                 
-    };
+                    EventDescription = eventDescription.EventDescription,
+
+
+
+            };
 
                 return View(vm);
             }
