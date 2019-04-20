@@ -64,52 +64,60 @@ namespace WebMvc.Controllers
 
         //extra
 
-        public IActionResult Search(string SearchEventName, string SearchEventCity, string SearchEventDate)
-        {
-            if (SearchEventName == null && SearchEventDate == null && SearchEventCity != null)
-            {
-                return RedirectToAction("Index", "CatalogCity", new { city = SearchEventCity });
-            }
-            else if (SearchEventName == null && SearchEventDate == null && SearchEventCity == null)
-            {
-                //uer did not provide anything
-                ViewData["Message"] = $"PLEASE ENTER EVENT NAME OR CITY OR DATE";
-            }
-            else if (SearchEventName != null || SearchEventDate != null && SearchEventCity != null)
-            {                
-                return RedirectToAction("EventSearchByCategory", "Catalog", new { EventCityFilterApplied = SearchEventCity, EventDateFilterApplied = SearchEventDate });
-            }
-            else
-            {
+        //public IActionResult Search(string SearchEventCategory, string SearchEventCity, string SearchEventDate)
+        //{
+        //    if (SearchEventCategory == null && SearchEventDate == null && SearchEventCity != null)
+        //    {
+        //        return RedirectToAction("Index", "CatalogCity", new { city = SearchEventCity });
+        //    }
+        //    else if (SearchEventCategory != null && SearchEventCity == null && SearchEventDate == null)
+        //    {
+        //        return RedirectToAction("EventSearchByCategory", "Catalog", new {categoryFilterApplied=SearchEventCategory});
+        //    }
+        //    else if (SearchEventCategory == null && SearchEventCity != null && SearchEventDate != null)
+        //    {
+        //        return RedirectToAction("EventSearchByCategory", "Catalog", new { EventDateFilterApplied = SearchEventDate });
+        //    }
+        //    else if (SearchEventCategory == null && SearchEventDate == null && SearchEventCity == null)
+        //    {
+        //        //uer did not provide anything
+        //        ViewData["Message"] = $"PLEASE ENTER EVENT CATEGORY OR CITY OR DATE";
+        //    }
+           
+        //    //else
+        //    //{
                 
-                if (SearchEventName == null)
-                {
-                    SearchEventName = "No Name";
-                }
-                if (SearchEventCity == null)
-                {
-                    SearchEventCity = "No City";
-                }
-                if (SearchEventDate == null || SearchEventDate == "mm-dd-yyyy")
-                {
-                    SearchEventDate = "No Date";
-                }
-                return RedirectToAction("Index", "SearchEventCatalog", new { name = SearchEventName, city = SearchEventCity, date = SearchEventDate });
+        //    //    if (SearchEventCategory == null)
+        //    //    {
+        //    //        SearchEventCategory = "No Name";
+        //    //    }
+        //    //    if (SearchEventCity == null)
+        //    //    {
+        //    //        SearchEventCity = "No City";
+        //    //    }
+        //    //    if (SearchEventDate == null || SearchEventDate == "mm-dd-yyyy")
+        //    //    {
+        //    //        SearchEventDate = "No Date";
+        //    //    }
+        //    //    return RedirectToAction("Index", "SearchEventCatalog", new { name = SearchEventCategory
+        //    //        , city = SearchEventCity, date = SearchEventDate });
 
-            }
+        //    //}
 
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public async Task<IActionResult> EventSearchByCategory(int? categoryFilterApplied, int? typeFilterApplied, String cityFilterApplied, int? page, String EventDateFilterApplied)
         {
 
-            int eventsOnPage = 9;
+            int eventsOnPage = 10;
+
             var catalog = await _service.GetEventsByAllFiltersAsync(page ?? 0, eventsOnPage, categoryFilterApplied, typeFilterApplied, EventDateFilterApplied,cityFilterApplied);
 
-            //get alleventcategories for hashtag
+           
             List<CatalogCategory> s_categories = await _service.GetCategoriesforsearchAsync();
+            List<CatalogType> s_types = await _service.GetTypesforsearchAsync();
 
             var vm = new EventFiltersCatalogViewModel()
             {
@@ -144,7 +152,14 @@ namespace WebMvc.Controllers
                     vm.CatalogEvents.Where(w => w.CatalogCategoryID == c.ID).First().CatalogCategory = c.Category;
                 }
             }
-
+            foreach (var t in s_types)
+            {
+                foreach (var eventitem in vm.CatalogEvents.Where(w => w.CatalogTypeID == t.ID))
+                {
+                    eventitem.CatalogType = t.Type;
+                    vm.CatalogEvents.Where(w => w.CatalogTypeID == t.ID).First().CatalogType = t.Type;
+                }
+            }
 
             vm.PaginationInfo.Next = (vm.PaginationInfo.ActualPage == vm.PaginationInfo.TotalPages - 1) ? "is-disabled" : "";
 

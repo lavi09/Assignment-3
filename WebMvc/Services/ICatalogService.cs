@@ -26,8 +26,11 @@ namespace WebMvc.Services
         Task<CatalogCa> GetCatalogCategoriesWithImageAsync(int page, int take);
 
         Task<Catalog> GetEventsByAllFiltersAsync(int page, int take, int? brand, int? type, String date, String city);
-        //Task<CatalogCi> GetCityInfo(string city);
+
+       // Task<CatalogCi> GetCityInfo(string city);
         Task<Catalog> GetEventsInCityAsync(string city);
         Task<List<CatalogCategory>> GetCategoriesforsearchAsync();
+        Task<List<CatalogType>> GetTypesforsearchAsync();
+
     }
 }

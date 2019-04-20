@@ -13,8 +13,7 @@ namespace WebMvc.ViewModels
         public IEnumerable<CatalogCity> CityItems { get; set; }
         public IEnumerable<SelectListItem> Cities { get; set; }
         public int? CityFilterApplied { get; set; }
-        public string CityFilterName { get; set; }
-      //  public string? SelectedCityFilter { get; set; }
+        public string CityFilterName { get; set; }      
         public PaginationInfo PaginationInfo { get; set; }
     }
 }

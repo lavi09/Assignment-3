@@ -252,40 +252,19 @@ namespace EventCatalogApi.Controllers
             return Ok(model);
 
         }
-        [HttpGet]
-        [Route("[action]/withcityname/{city:minlength(1)}")]
-        public async Task<IActionResult> City(string city,
-                     [FromQuery] int pageSize = 6,
-                      [FromQuery] int pageIndex = 0)
-        {
-            var eventsCount = await _context.CatalogCities
-                                 .Where(c => c.City.StartsWith(city))
-                                 .LongCountAsync();
-            var events = await _context.CatalogCities
-                                 .Where(c => c.City.StartsWith(city))
-                                 .OrderBy(c => c.City)
-                                 .Skip(pageSize * pageIndex)
-                                 .Take(pageSize)
-                                 .ToListAsync();
-         
-            var model = new PaginatedEventsViewModel<CatalogCity>
-                 (pageIndex, pageSize, eventsCount, events);
-
-            return Ok(model);
-        }
-
+        
 
         [HttpGet]
-        [Route("events/title/{title}/city/{city}/date/{date}")]
+        [Route("events/name/{name}/city/{city}/date/{date}")]
 
-        public async Task<IActionResult> EventsWithTitleCityDate(string title, string city, string date, [FromQuery] int pageSize = 6,
+        public async Task<IActionResult> EventsWithNameCityDate(string name, string city, string date, [FromQuery] int pageSize = 6,
                                                                          [FromQuery] int pageIndex = 0)
         {
             var root = (IQueryable<CatalogEvent>)_context.CatalogEvents;
 
-            if (title != "notitle")
+            if (name != "notitle")
             {
-                root = root.Where(c => c.Name.StartsWith(title));
+                root = root.Where(c => c.Name.StartsWith(name));
             }
             if (city != "nocity")
             {
