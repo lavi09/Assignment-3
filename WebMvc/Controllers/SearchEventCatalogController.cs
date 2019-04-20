@@ -19,7 +19,7 @@ namespace WebMvc.Controllers
 
         public async Task<IActionResult> Index(string name, string city, string date, int? page)
         {
-            int eventsPage = 9;
+            int eventsPage = 10;
             
             var catalog = await
 

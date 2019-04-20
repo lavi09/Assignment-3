@@ -16,7 +16,7 @@
             <div class="carousel-caption" role="option">
                 <p>
                     Browse the fun events happeining in your city !
-                    
+
                 </p>
             </div>
         </div>
@@ -25,7 +25,7 @@
             <div class="carousel-caption" role="option">
                 <p>
                     Book some tickets for your romantic date night !
-                    
+
                 </p>
             </div>
         </div>
@@ -34,7 +34,7 @@
             <div class="carousel-caption" role="option">
                 <p>
                     Create event of your choice and host it for your family and friends!
-                   
+
                 </p>
             </div>
         </div>
@@ -49,30 +49,67 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
-
-
-
-<section class="esh-search-filters">
+<section class="esh-catalog-filters">
     <div class="container">
+        <form asp-controller="Catalog" asp-action="EventSearchByCategory" method="post">
+            <label class="esh-catalog-label" data-title="category">
+                <select asp-for="@Model.CategoryFilterApplied" asp-items="@Model.Categories" class="esh-catalog-filter"></select>
+            </label>
+
+            <label class="esh-catalog-label" data-title="type">
+                <select asp-for="@Model.TypesFilterApplied" asp-items="@Model.Types" class="esh-catalog-filter"></select>
+            </label>
+                <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+
+            
+        </form>
+        <br />
+    </div>
+</section>
+
+@*<section class="esh-search-filters">
+    <div class="container">
+        <form asp-controller="Catalog" asp-action="EventSearchByCategory" method="post">
+            <p class="esh-event-filters">
+                Looking For:
+                <label class="esh-catalog-label" data-title="category">
+
+                    <select asp-for="@Model.CategoryFilterApplied" asp-items="@Model.Categories" ></select>
+                </label>
+                <input class="esh-catalog-send" type="image" src="~/images/arrow-right.svg" />
+                </p>
+        </form>
+
         <form asp-action="Search" asp-controller="Catalog" method="post" style="height: 100px; padding :30px">
             <p class="esh-event-filters">
-               
-                Looking For: <input type="text" name="SearchEventName" placeholder="Washington State Fair">
+
+
                 In: <input type="text" name="SearchEventCity" placeholder="Bellevue">
-            
+
 
                 <label class="esh-event-label " data-title="eventsdate">
 
-                  On:  <select asp-for="@Model.DatesFilterApplied" asp-items="@Model.Dates" class="esh-event-filter"></select>
+                    On:  <select asp-for="@Model.DatesFilterApplied" asp-items="@Model.Dates" class="esh-event-filter"></select>
                 </label>
-                <input type="submit" value="Search" />
+
             </p>
         </form>
+    </div>*@
+<div>
+    <h1>Live Your Best Life</h1>
+</div>
+
+    <div >
+        <form asp-action="Search" asp-controller="Catalog" method="post">
+          
+                Search Event by City :<input type="text" name="SearchEventCity" placeholder="Bellevue">
+            
+            <input type="submit" value="Search" />
+
+        </form>
+        <br /><br />
     </div>
-    <div>
-        <h1>Live Your Best Life</h1>
-    </div>
-</section>
+
 
 <div class="container">
     @if (Model.CatalogEvents.Count() > 0)

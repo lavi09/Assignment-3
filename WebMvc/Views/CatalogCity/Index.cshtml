@@ -7,8 +7,8 @@
 
 <div class="container" style="width:100%;height:100%;">
 
-    @if (Model.CityItems.Count() > 0)
-    {
+    @*@if (Model.CityItems.Count() > 0)
+    {*@
        
     <div style="float:left; width:50%;height:100%">
         <section class="search-section">
@@ -16,37 +16,22 @@
             <form asp-action="Index" asp-controller="CatalogCity" method="post" style="height: 50px; padding :30px">
                 <p>
                     <img aligh="center" src=@Url.Content("~/images/locationIcon1.png") style="height: 50px; width:50px" alt="Location">
-                    Browsing in
-                    <select asp-for="@Model.CityFilterApplied" style="height: 50px; width:50px" name="city" asp-items="@Model.Cities" class="esh-eventcity-filter"></select>
+                    Browsing in  @Model.CityFilterName
                     <input class="esh-event-send" style="height: 50px; width:50px" type="image" src="~/images/arrow-right.svg" />
                 </p>
             </form>
         </section>
-        <br /><br /><br />
-        Things to do in
-    </div>
-    
-    @*@foreach (var catalogItem in Model.CityItems)
-    {
-        <h2>@catalogItem.Cities</h2><br />
-       
-        <br />
-    }
-
-    <div style="float:right; width:50%;height:100%; ">
-        @foreach (var catalogItem in Model.CityItems)
-        {
-            <img src="@catalogItem.CityImageUrl" alt="City Picture" class="eventImg img-fluid">
-        }
-    </div>*@
+        <br><br />
+    </div>   
+        
            
-        }
+        @*}
         else
         {
         <div class="esh-catalog-items row">
             THERE ARE NO RESULTS THAT MATCH YOUR SEARCH
         </div>
-        }
+        }*@
     </div>
 
 

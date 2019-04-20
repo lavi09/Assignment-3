@@ -187,9 +187,9 @@ namespace WebMvc.Services
         }
         //public async Task<CatalogCi> GetCityInfo(string city)
         //{
-        //    var allEventsCityUri = ApiPaths.Catalog.GetCityDescription(_remoteServiceBaseUrl, city);
-        //    var dataString = await _apiClient.GetStringAsync(allEventsCityUri);
-        //    var response = JsonConvert.DeserializeObject<EventCityCatalog>(dataString);
+        //    var allEventsCityUri = ApiPaths.Catalog.GetCityDescription(_remoteServiceBaseUri, city);
+        //    var dataString = await _client.GetStringAsync(allEventsCityUri);
+        //    var response = JsonConvert.DeserializeObject<CatalogCi>(dataString);
 
         //    return response;
 
@@ -209,6 +209,14 @@ namespace WebMvc.Services
             var getCatalogCategoriesUri = ApiPaths.Catalog.GetAllCategories(_remoteServiceBaseUri);
             var dataString = await _client.GetStringAsync(getCatalogCategoriesUri);
             var response = JsonConvert.DeserializeObject<List<CatalogCategory>>(dataString);
+
+            return response;
+        }
+        public async Task<List<CatalogType>> GetTypesforsearchAsync()
+        {
+            var getCatalogTypesUri = ApiPaths.Catalog.GetAllTypes(_remoteServiceBaseUri);
+            var dataString = await _client.GetStringAsync(getCatalogTypesUri);
+            var response = JsonConvert.DeserializeObject<List<CatalogType>>(dataString);
 
             return response;
         }
