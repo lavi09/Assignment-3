@@ -83,21 +83,25 @@ namespace WebMvc.Infrastructure
                 return $"{baseUri}Events/withcity/{city}";
             }
 
-            public static string GetEventsByAllFilters(string baseUri,int page, int take, int? eventcategory, int? eventtype, String date, String city)
+            public static string GetEventsByAllFilters(string baseUri,int page, int take, int? eventcategory, int? eventtype)
             {
                 var filterQs = string.Empty;
 
-                if (eventcategory.HasValue || eventtype.HasValue || city != null || date != null)
+                if (eventcategory.HasValue || eventtype.HasValue )
                 {
 
                     var eventcategoryQs = (eventcategory.HasValue) ? eventcategory.Value.ToString() : "null";
                     var eventtypeQs = (eventtype.HasValue) ? eventtype.Value.ToString() : "null";
-                    var eventdateQs = date ?? "All Days";
-                    var eventcityQs = city ?? "All";
-                    filterQs = $"/type/{eventtypeQs}/category/{eventcategoryQs}/date/{eventdateQs}/city/{eventcityQs}";
+                    //var eventdateQs = date ?? "All Days";
+                    //var eventcityQs = city ?? "All";
+                    filterQs = $"/type/{eventtypeQs}/category/{eventcategoryQs}";
                 }
               
                 return $"{baseUri}eventsByFilters{filterQs}?pageIndex={page}&pageSize={take}";
+            }
+            public static string PostEvent(string baseUri)
+            {
+                return $"{ baseUri}new";
             }
 
             //public static string GetCityDescription(string baseUri, string city)
@@ -121,7 +125,7 @@ namespace WebMvc.Infrastructure
 
             //    }
             //    return $"{baseUri}{filterQs}?pageSize={take}&pageIndex={page}";
-                
+
             //}
 
 

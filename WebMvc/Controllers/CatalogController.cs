@@ -30,8 +30,7 @@ namespace WebMvc.Controllers
                 CatalogCategoriesWithImage = ecategories.Data,
                 Types = await _service.GetTypesAsync(),
                 Cities=await _service.GetCitiesAsync(),
-                Dates = _service.GetDates(),
-                DatesFilterApplied = "All Days",
+                
                 CategoryFilterApplied = categoryFilterApplied ?? 0,
                 TypesFilterApplied = typeFilterApplied ?? 0,
                 CitiesFilterApplied = cityFilterApplied ?? 0,
@@ -108,12 +107,12 @@ namespace WebMvc.Controllers
         //    return View();
         //}
 
-        public async Task<IActionResult> EventSearchByCategory(int? categoryFilterApplied, int? typeFilterApplied, String cityFilterApplied, int? page, String EventDateFilterApplied)
+        public async Task<IActionResult> EventSearchByCategory(int? categoryFilterApplied, int? typeFilterApplied, int? page)
         {
 
             int eventsOnPage = 10;
 
-            var catalog = await _service.GetEventsByAllFiltersAsync(page ?? 0, eventsOnPage, categoryFilterApplied, typeFilterApplied, EventDateFilterApplied,cityFilterApplied);
+            var catalog = await _service.GetEventsByAllFiltersAsync(page ?? 0, eventsOnPage, categoryFilterApplied, typeFilterApplied);
 
            
             List<CatalogCategory> s_categories = await _service.GetCategoriesforsearchAsync();
@@ -126,11 +125,11 @@ namespace WebMvc.Controllers
                 Categories = await _service.GetCategoriesAsync(),
                 Types = await _service.GetTypesAsync(),
                 Cities = await _service.GetCitiesAsync(),
-                Dates = _service.GetDates(),
-                DatesFilterApplied = EventDateFilterApplied ?? "All Days",
+               // Dates = _service.GetDates(),
+               // DatesFilterApplied = EventDateFilterApplied ?? "All Days",
                 CategoryFilterApplied = categoryFilterApplied?? 0,
                 TypesFilterApplied = typeFilterApplied ?? 0,
-                CitiesFilterApplied = cityFilterApplied ?? "All",
+                //CitiesFilterApplied = cityFilterApplied ?? "All",
                 PaginationInfo = new PaginationInfo()
                 {
 

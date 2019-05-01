@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using EventCatalogApi.Data;
 using EventCatalogApi.Domain;
@@ -163,42 +164,22 @@ namespace EventCatalogApi.Controllers
         }
 
 
-        [HttpGet]
-        [Route("Events/date/{date}")]
-        public async Task<IActionResult> EventsWithDate(DateTime date,
-         [FromQuery] int pageSize = 6,
-         [FromQuery] int pageIndex = 0)
-        {
-            var eventsCount = await _context.CatalogEvents
-                                    .Where(c => c.StartDate == date)
-                                    .LongCountAsync();
-            var events = await _context.CatalogEvents
-                                    .Where(c => c.StartDate == date)
-                                    .OrderBy(c => c.Name)
-                                    .Skip(pageSize * pageIndex)
-                                    .Take(pageSize)
-                                    .ToListAsync();
-            events = ChangePictureUrl(events);
-            var model = new PaginatedEventsViewModel<CatalogEvent>
-                    (pageIndex, pageSize, eventsCount, events);
-
-            return Ok(model);
-        }
+        
 
         [HttpGet]
-        [Route("[action]/catalogtype/{catalogtypeId}/catalogcategory/{catalogcategoryId}")]
+        [Route("[action]/catalogtype/{catalogtypeID}/catalogcategory/{catalogcategoryID}")]
 
-        public async Task<IActionResult> Events(int? catalogtypeId, int? catalogcategoryId, [FromQuery] int pageSize = 6,
+        public async Task<IActionResult> Events(int? catalogtypeID, int? catalogcategoryID, [FromQuery] int pageSize = 6,
                                                                               [FromQuery] int pageIndex = 0)
         {
             var root = (IQueryable<CatalogEvent>)_context.CatalogEvents;
-            if (catalogtypeId.HasValue)
+            if (catalogtypeID.HasValue)
             {
-                root = root.Where(c => c.CatalogTypeID == catalogtypeId);
+                root = root.Where(c => c.CatalogTypeID == catalogtypeID);
             }
-            if (catalogcategoryId.HasValue)
+            if (catalogcategoryID.HasValue)
             {
-                root = root.Where(c => c.CatalogCategoryID == catalogcategoryId);
+                root = root.Where(c => c.CatalogCategoryID == catalogcategoryID);
             }
             var eventsCount = await root
                                 .LongCountAsync();
@@ -254,37 +235,7 @@ namespace EventCatalogApi.Controllers
         }
         
 
-        [HttpGet]
-        [Route("events/name/{name}/city/{city}/date/{date}")]
-
-        public async Task<IActionResult> EventsWithNameCityDate(string name, string city, string date, [FromQuery] int pageSize = 6,
-                                                                         [FromQuery] int pageIndex = 0)
-        {
-            var root = (IQueryable<CatalogEvent>)_context.CatalogEvents;
-
-            if (name != "notitle")
-            {
-                root = root.Where(c => c.Name.StartsWith(name));
-            }
-            if (city != "nocity")
-            {
-                root = root.Where(c => c.City.StartsWith(city));
-            }
-            if (date != "nodate")
-            {
-                root = root.Where(c => c.StartDate.ToShortDateString() == date.ToString());
-            }
-            var eventsCount = await root
-                                .LongCountAsync();
-            var events = await root
-                                .OrderBy(c => c.Name)
-                                .Skip(pageSize * pageIndex)
-                                .Take(pageSize)
-                                .ToListAsync();
-            events = ChangePictureUrl(events);
-            var model = new PaginatedEventsViewModel<CatalogEvent>(pageIndex, pageSize, eventsCount, events);
-            return Ok(model);
-        }
+        
 
         [HttpGet]
         [Route("[action]")]
@@ -303,9 +254,9 @@ namespace EventCatalogApi.Controllers
         }
 
         [HttpGet]
-        [Route("[action]/type/{eventTypeId}/category/{eventCategoryId}/date/{eventDate}/city/{eventCity}")]
+        [Route("[action]/type/{eventTypeId}/category/{eventCategoryId}")]
 
-        public async Task<IActionResult> EventsByFilters(int? eventTypeId, int? eventCategoryId, String eventDate, String eventCity, [FromQuery] int pageSize = 6, [FromQuery] int pageIndex = 0)
+        public async Task<IActionResult> EventsByFilters(int? eventTypeId, int? eventCategoryId, [FromQuery] int pageSize = 6, [FromQuery] int pageIndex = 0)
         {
             var root = (IQueryable<CatalogEvent>)_context.CatalogEvents;
             if (eventTypeId.HasValue)
@@ -314,20 +265,9 @@ namespace EventCatalogApi.Controllers
             }
             if (eventCategoryId.HasValue)
             {
-                root = root.Where(c => c.CatalogCategoryID == eventCategoryId);
+                root = root.Where(c => c.CatalogCategoryID== eventCategoryId);
             }
-            if (eventCity != "null" && eventCity != "All")
-            {
-              
-                root = root.Where(c => c.City.ToLower() == eventCity.ToLower());
-              
-            }     
-
-            if (eventDate != "null" && eventDate != "All Days")
-
-            {
-                root = FindingEventsByDate(root, eventDate); 
-            }
+           
 
             var totalItems = await root
                                 .LongCountAsync();
@@ -341,64 +281,81 @@ namespace EventCatalogApi.Controllers
             return Ok(model);
         }
 
-        private IQueryable<CatalogEvent> FindingEventsByDate(IQueryable<CatalogEvent> root, String date)
+
+
+        [HttpPost]
+        [Route("new")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> CreateEvent([FromBody]CatalogEvent newEvent)
         {
-            DateTime dateTime = DateTime.Now.Date;
 
-            if (date != null && date != "All Days")
+            var item = new CatalogEvent
             {
-                switch (date)
-                {
-                    case "Today":
-                        dateTime = DateTime.Now;
-                        root = root.Where(c => DateTime.Compare(c.StartDate.Date, dateTime.Date) == 0);
-                        break;
-                    case "Tomorrow":
-                        var tomorrow = dateTime.AddDays(1);
-                        root = root.Where(c => DateTime.Compare(c.StartDate.Date, tomorrow) == 0);
-                        break;
-                    case "This week":
-                        var thisWeekdaySun = dateTime.AddDays(-(7 - (int)dateTime.DayOfWeek));
-                        var comingSun = dateTime.AddDays(7 - (int)dateTime.DayOfWeek);
 
-                        root = root.Where(c => (c.StartDate.Date >= thisWeekdaySun && c.StartDate.Date <= comingSun));
+                Name = newEvent.Name,
+                Address = newEvent.Address,
+                City = newEvent.City,
+                State = newEvent.State,
+                Zipcode = newEvent.Zipcode,
+                PictureUrl = newEvent.PictureUrl,
+                Price = newEvent.Price,
+                StartDate = newEvent.StartDate,
+                EndDate = newEvent.EndDate,            
+                CatalogCategoryID = newEvent.CatalogCategoryID,
+                CatalogTypeID = newEvent.CatalogTypeID,
+                //CatalogCityID = newEvent.CatalogCityID,
+                EventDescription = newEvent.EventDescription
 
-                        break;
-                    case "This weekend":
-                        var weekendFri = dateTime.AddDays(5 - (int)dateTime.DayOfWeek);
-                        var weekendSun = dateTime.AddDays(7 - (int)dateTime.DayOfWeek);
-                        root = root.Where(c => (c.StartDate.Date >= weekendFri && c.StartDate.Date <= weekendSun));
-                        break;
-                    case "Next week":
-                        var nextWeekSunday = dateTime.AddDays((7 - (int)dateTime.DayOfWeek) + 7);
-                        var comingSunday = dateTime.AddDays(7 - (int)dateTime.DayOfWeek);
-
-                        root = root.Where(c => (c.StartDate.Date >= comingSunday && c.StartDate.Date <= nextWeekSunday));
-                        break;
-                    case "Next weekend":
-                        var nextWeekFri = dateTime.AddDays(5 - (int)dateTime.DayOfWeek + 7);
-                        var nextWeekSun = dateTime.AddDays(7 - (int)dateTime.DayOfWeek + 7);
-
-                        root = root.Where(c => (c.StartDate.Date >= nextWeekFri && c.StartDate.Date <= nextWeekSun));
-
-                        break;
-                    case "This month":
-
-                        var thisMonth = dateTime.Month;
-                        root = root.Where(c => c.StartDate.Date.Month == thisMonth);
-                        break;
-
-                    case "Next month":
-                        var nextMonth = dateTime.AddMonths(1).Month;
-                        root = root.Where(c => c.StartDate.Date.Month == nextMonth);
-                        break;
-                    default:
-                        break;
-
-                }
-            }
-
-            return root;
+            };
+        
+            _context.CatalogEvents.Add(item);
+            await _context.SaveChangesAsync();
+            var result = GetEventsById(item.ID);
+            return Ok(result);
+            // return CreatedAtAction(nameof(GetEventById), new { id = item.Id });
         }
+
+        [HttpPut]
+        [Route("events")]
+        public async Task<IActionResult> UpdateEvent(
+            [FromBody] CatalogEvent eventToUpdate)
+        {
+            var catalogEvent = await _context.CatalogEvents
+                              .SingleOrDefaultAsync
+                              (i => i.ID == eventToUpdate.ID);
+            if (catalogEvent == null)
+            {
+                return NotFound(new { Message = $"Item with id {eventToUpdate.ID} not found." });
+            }
+            catalogEvent = eventToUpdate;
+            _context.CatalogEvents.Update(catalogEvent);
+            await _context.SaveChangesAsync();
+            var result = GetEventsById(eventToUpdate.ID);
+            return Ok(result);
+
+            // return CreatedAtAction(nameof(GetEventById), new { id = eventToUpdate.Id });
+        }
+
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteEvent(int id)
+        {
+            var catalogEvent = await _context.CatalogEvents
+                .SingleOrDefaultAsync(p => p.ID == id);
+            if (catalogEvent == null)
+            {
+                return NotFound();
+
+            }
+            _context.CatalogEvents.Remove(catalogEvent);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
+
+        
+
     }
 }

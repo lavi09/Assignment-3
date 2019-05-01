@@ -1,0 +1,81 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: catalogdb
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: catalogdb
+    spec:
+      containers:
+      - name: catalogeventdb
+        image: microsoft/mssql-server-linux:latest
+        ports:
+        - containerPort: 1433
+          name: mssqlserver
+        env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: SA_PASSWORD
+          value: "EventAPI!"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: catalogdb
+spec:
+  ports:
+  - port: 1433
+  selector:
+    app: catalogdb
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: event-catalog
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  template:
+    metadata:
+      labels:
+        app: event-catalog
+    spec:
+      containers:
+      - name: event-catalog
+        image: eventacr.azurecr.io/event/catalog:v1
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 250m
+          limits:
+            cpu: 500m
+        env:
+        - name: DatabaseServer
+          value: "catalogdb"
+        - name: DatabaseName
+          value: "CatalogDb"
+        - name: DatabaseUser
+          value: "sa"
+        - name: DatabaseUserPassword
+          value: "EventAPI!"
+        - name: ExternalCatalogBaseUrl
+          value: "http://localhost:80"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-catalog
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: event-catalog

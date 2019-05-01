@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "EventCreate";
+    @model WebMvc.ViewModels.EventCreationViewModel
+}
+
+<div>
+    <h2>Created Event </h2>
+    <h4> @Model.Event./Name</h4>
+  
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
